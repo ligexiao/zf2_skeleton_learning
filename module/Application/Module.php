@@ -21,6 +21,18 @@ class Module
         $moduleRouteListener->attach($eventManager);
     }
 
+    /**
+     * 注册CommonControllerAbstractFactory抽象工厂类
+    */
+    public function getControllerConfig()
+    {
+        return array(
+            'abstract_factories' => array(
+                'Application\Services\CommonControllerAbstractFactory'
+            ),
+        );
+    }
+
     public function getConfig()
     {
         return include __DIR__ . '/config/module.config.php';

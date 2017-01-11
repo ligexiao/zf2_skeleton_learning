@@ -74,10 +74,15 @@ return array(
         ),
     ),
     'controllers' => array(
-        'invokables' => array(
+        'invokables' => array(// 新增的controller需要在这里注册
             'Application\Controller\Index' => Controller\IndexController::class,
-            'Application\Controller\Test' => Controller\TestController::class
+            //'Application\Controller\Test' => Controller\TestController::class
         ),
+        /*
+         * CommonControllerAbstractFactory类除了在Module中注册也可以在此注册
+         * 'abstract_factories' => array(
+            'Application\Services\CommonControllerAbstractFactory'
+        )*/
     ),
     'view_manager' => array(
         'display_not_found_reason' => true,
