@@ -9,19 +9,23 @@
 
 namespace Application\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController;
+use Common\ReturnInfo;
 use Zend\View\Model\ViewModel;
 
-class TestController extends AbstractActionController
+class TestController extends BaseController
 {
     public function indexAction()
     {
         return new ViewModel();
     }
 
-    public function ddAction()
+    public function stringAction()
     {
-        echo "hello zendframework2";
-        exit;
+        echo "hello zendframework2";exit;
+    }
+
+    public function jsonAction()
+    {
+        $this->ret->set(new ReturnInfo(0, 'ok'));
     }
 }

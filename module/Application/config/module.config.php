@@ -107,4 +107,6 @@ return array(
             ),
         ),
     ),
+    //日志路劲
+    'logpath' => ENV != 'production' ? '/tmp/logs' : '/data/logs',
 );

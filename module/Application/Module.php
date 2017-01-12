@@ -44,6 +44,7 @@ class Module
             'Zend\Loader\StandardAutoloader' => array(
                 'namespaces' => array(
                     __NAMESPACE__ => __DIR__ . '/src/' . __NAMESPACE__,
+                    'Common' => __DIR__ . '/../../library/Common',// 注册命名空间
                 ),
             ),
         );
