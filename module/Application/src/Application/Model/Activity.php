@@ -21,8 +21,8 @@ class Activity extends AbstractModel
     public function user_act_list($params)
     {
         $where_sql = " ua.Fenable='Y' AND a.Fenable='Y' AND u.Fenable='Y'";
-        if(!empty($params['user_id'])){
-            $where_sql .= " AND u.Fid='{$params['user_id']}'";
+        if(!empty($params['wechat_id'])){
+            $where_sql .= " AND u.Fwechat_id='{$params['wechat_id']}'";
         }
         if(!empty($params['act_id'])){
             $where_sql .= " AND a.Fid='{$params['act_id']}'";
@@ -35,7 +35,6 @@ class Activity extends AbstractModel
         $sql = "SELECT
                 ua.Fid,
                 ua.Fopt_type,
-                u.Fid AS user_id,
                 u.Fwechat_id,
                 u.Fnick_name,
                 a.Fid AS act_id,
@@ -48,7 +47,7 @@ class Activity extends AbstractModel
                 Fstatus,
                 Fcreate_user
             FROM r_user_act ua
-            INNER JOIN t_user u on ua.Fuser_id=u.Fid
+            INNER JOIN t_user u on ua.Fwechat_id=u.Fwechat_id
             INNER JOIN t_activity a on ua.Fact_id=a.Fid
             WHERE {$where_sql}";
         $res =  $this->db->query($sql);
@@ -70,7 +69,6 @@ class Activity extends AbstractModel
                 );
 
                 $ret[$item['act_id']]['act_user_info'][] = array(
-                    'user_id' => $item['user_id'],
                     'wechat_id' => $item['Fwechat_id'],
                     'nick_name' => $item['Fnick_name'],
                 );
@@ -184,7 +182,7 @@ class Activity extends AbstractModel
         }
 
         $info_rel = array(
-            'Fuser_id' => $insert_user_id,
+            'Fwechat_id' => $params['wechat_id'],
             'Fact_id' =>$insert_act_id,
             'Fopt_type' => 1,
             'Fadd_time' =>$add_time
@@ -235,9 +233,9 @@ class Activity extends AbstractModel
             $this->errMsg = "act_id参数不能为空";
             return ;
         }
-        if(empty($params['user_id'])){
+        if(empty($params['wechat_id'])){
             $this->errCode = -2;
-            $this->errMsg = "user_id参数不能为空";
+            $this->errMsg = "wechat_id参数不能为空";
             return ;
         }
         if(empty($params['opt_type'])){
@@ -248,7 +246,7 @@ class Activity extends AbstractModel
 
         $uinfo = array(
             'Fact_id' => $params['act_id'],
-            'Fuser_id' => $params['user_id'],
+            'Fwechat_id' => $params['wechat_id'],
             'Fopt_type' => $params['opt_type'],
         );
         $affect_rows_r = $this->db->insert('r_user_act',$uinfo);

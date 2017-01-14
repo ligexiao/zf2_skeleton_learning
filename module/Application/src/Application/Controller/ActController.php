@@ -16,7 +16,7 @@ class ACTController extends BaseController
 {
     public function listAction()
     {
-        $params['user_id'] = $this->getParam('user_id');
+        $params['wechat_id'] = $this->getParam('wechat_id');
         $params['act_id'] = $this->getParam('act_id');
         $params['page'] = $this->getParam('page', 1);// 第一页
         $params['size'] = $this->getParam('size', 10);// 每页10条
@@ -69,7 +69,7 @@ class ACTController extends BaseController
     public function joinAction()
     {
         $params['act_id'] = $this->getParam('act_id');
-        $params['user_id'] = $this->getParam('user_id');
+        $params['wechat_id'] = $this->getParam('wechat_id');
         $params['opt_type'] = $this->getParam('opt_type', 1);
 
         $act = new Activity();
