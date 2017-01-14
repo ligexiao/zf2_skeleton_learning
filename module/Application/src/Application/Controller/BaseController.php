@@ -42,6 +42,8 @@ class BaseController extends AbstractActionController
 
     protected $isJsonActionFlag = true;
 
+    protected $autoTransaction = true;// 默认开始自动事务
+    protected $beginTrans = false;
 
     /**
      * 是否输出全整页面
@@ -104,8 +106,14 @@ class BaseController extends AbstractActionController
         }
 
         try {
+            if ($this->autoTransaction && !$this->beginTrans) {
+                DBOperFactory::getDb()->beginTransaction();
+                $this->beginTrans = true;
+            }
+
             $this->preDispatch();
             $response = parent::onDispatch($e);
+
         } catch (Exception $ex) {
 			Log::info('dispatch exception:' . $ex->getMessage());
 			Log::info($ex->getTraceAsString());
@@ -115,6 +123,17 @@ class BaseController extends AbstractActionController
             } else {
                 throw $ex;
             }
+        }
+
+        if ($this->beginTrans) {
+            if (isset($this->ret->return_code) && $this->ret->return_code == ReturnInfo::CODE_SUCCESS) {
+                DBOperFactory::getDb()->commit();
+                Log::info("commited.");
+            } else {
+                Log::info("rollBack...");
+                DBOperFactory::getDb()->rollBack();
+            }
+            $this->beginTrans = false;
         }
 
         if ($this->defaultView) {

@@ -42,9 +42,10 @@ class Module
     {
         return array(
             'Zend\Loader\StandardAutoloader' => array(
-                'namespaces' => array(
+                'namespaces' => array(// 注册命名空间
                     __NAMESPACE__ => __DIR__ . '/src/' . __NAMESPACE__,
-                    'Common' => __DIR__ . '/../../library/Common',// 注册命名空间
+                    'Common' => __DIR__ . '/../../library/Common',
+                    __NAMESPACE__.'\Model' => __DIR__ . '/src/' . __NAMESPACE__.'/Model',
                 ),
             ),
         );
