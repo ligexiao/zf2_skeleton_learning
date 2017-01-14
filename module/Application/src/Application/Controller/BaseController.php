@@ -9,6 +9,7 @@
 
 namespace Application\Controller;
 
+use Common\DBOperFactory;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\Mvc\MvcEvent;
@@ -97,6 +98,9 @@ class BaseController extends AbstractActionController
             Log::registerLog($logPath, $format);
 
             Log::info('request begin...');
+
+            //init db config
+            DBOperFactory::setConfig($this->getConfig('dbconfig'));
         }
 
         try {
