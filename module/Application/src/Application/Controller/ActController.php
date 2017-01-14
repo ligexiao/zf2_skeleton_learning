@@ -14,7 +14,7 @@ use Common\ReturnInfo;
 
 class ACTController extends BaseController
 {
-    public function actListAction()
+    public function listAction()
     {
         $params['user_id'] = $this->getParam('user_id');
         $params['act_id'] = $this->getParam('act_id');
@@ -26,7 +26,7 @@ class ACTController extends BaseController
         $this->ret->set(new ReturnInfo($act->errCode, $act->errMsg, $data));
     }
 
-    public function actUpdateAction()
+    public function updateAction()
     {
         $params['act_id'] = $this->getParam('act_id');
         $params['act_begin_time'] = $this->getParam('act_begin_time');
@@ -41,7 +41,7 @@ class ACTController extends BaseController
         $this->ret->set(new ReturnInfo($act->errCode, $act->errMsg));
     }
 
-    public function actAddAction()
+    public function addAction()
     {
         $params['wechat_id'] = $this->getParam('wechat_id');
         $params['nick_name'] = $this->getParam('nick_name');
@@ -57,12 +57,23 @@ class ACTController extends BaseController
         $this->ret->set(new ReturnInfo($act->errCode, $act->errMsg));
     }
 
-    public function actDeleteAction()
+    public function deleteAction()
     {
         $params['act_id'] = $this->getParam('act_id');
 
         $act = new Activity();
-        $act->update_delete($params);
+        $act->update_activity($params);
+        $this->ret->set(new ReturnInfo($act->errCode, $act->errMsg));
+    }
+
+    public function joinAction()
+    {
+        $params['act_id'] = $this->getParam('act_id');
+        $params['user_id'] = $this->getParam('user_id');
+        $params['opt_type'] = $this->getParam('opt_type', 1);
+
+        $act = new Activity();
+        $act->join_activity($params);
         $this->ret->set(new ReturnInfo($act->errCode, $act->errMsg));
     }
 }

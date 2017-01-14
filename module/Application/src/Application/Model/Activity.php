@@ -228,4 +228,36 @@ class Activity extends AbstractModel
 
         return;
     }
+
+    public function join_activity($params){
+        if(empty($params['act_id'])){
+            $this->errCode = -1;
+            $this->errMsg = "act_id参数不能为空";
+            return ;
+        }
+        if(empty($params['user_id'])){
+            $this->errCode = -2;
+            $this->errMsg = "user_id参数不能为空";
+            return ;
+        }
+        if(empty($params['opt_type'])){
+            $this->errCode = -3;
+            $this->errMsg = "opt_type参数不能为空";
+            return ;
+        }
+
+        $uinfo = array(
+            'Fact_id' => $params['act_id'],
+            'Fuser_id' => $params['user_id'],
+            'Fopt_type' => $params['opt_type'],
+        );
+        $affect_rows_r = $this->db->insert('r_user_act',$uinfo);
+        if($affect_rows_r <=0){
+            Log::err("insert r_user_act failed");
+            Error::trigger(Error::ERR_LOGIC_COMMON, "加入活动失败");
+            return ;
+        }
+
+        return;
+    }
 }
