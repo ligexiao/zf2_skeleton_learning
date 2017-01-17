@@ -13,8 +13,8 @@
 
 if (ENV == 'production') {
     return array(
-        'api_token_expire_time' => 120000,//token过期时间
-
+        'appid' => 0,
+        'secret' => '',
     );
 } else {
     return array();
