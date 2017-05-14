@@ -25,6 +25,36 @@ class TestController extends BaseController
         echo "hello zendframework2";exit;
     }
 
+    public function wechatAction()
+    {
+        $params['timestamp'] = $this->getParam('timestamp');
+        $params['nonce'] = $this->getParam('nonce');
+        $params['signature'] = $this->getParam('signature');
+        $params['echostr'] = $this->getParam('echostr');
+
+        $token = $this->getConfig('wechat_token');
+        $tmpArr = array($params['timestamp'],$params['nonce'],$token);//将时间戳，token，随机数放到数组里，方便排序
+
+        sort($tmpArr,SORT_STRING);//字典序排序数组
+
+        $tmpStr = sha1(implode($tmpArr));//拼接字符串并用sha1算法加密
+
+        if($tmpStr == $params['signature']){
+
+            echo $params['echostr'];//验证成功，输出echostr
+
+            exit;
+
+        }else{
+
+            echo 'error';
+
+            exit;
+
+        }
+
+    }
+
     public function jsonAction()
     {
         // query: wechat_id
