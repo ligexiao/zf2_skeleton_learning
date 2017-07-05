@@ -16,8 +16,8 @@ class WxAPI
 	
 	public function request($url, $data)
 	{
-		$data['app_key'] = $this->appKey;
-		$data['app_secret'] = $this->appSecret;
+		$data['appid'] = $this->appKey;
+		$data['secret'] = $this->appSecret;
 		
 		$this->httpClient->setUrl($url);
 		return $this->httpClient->get($data);

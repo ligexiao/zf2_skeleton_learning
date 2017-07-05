@@ -38,6 +38,7 @@ class Login extends AbstractModel
             'js_code'=>$params['code'],
             'grant_type' => 'authorization_code'
         );
+        Log::info("request-data: ".json_encode($data));
         $ret = $api->request($url, $data);
         Log::info("get_login_key-request-ret: ".json_encode($ret));
         if(!empty($ret) && 0==$ret['code'] && !empty($ret['data'])){
